@@ -83,5 +83,185 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         });     
     });
+    //reproductor de musica
+    const dataMusic = [
+        {
+            name: 'Bonita!',
+            src: 'music/Bonita!!.m4a',
+        },
+        {
+            name: 'Cha Cha Cha!',
+            src: 'music/Chachachá!.m4a',
+        },
+        {
+            name: 'Hani!',
+            src: 'music/Hani!.m4a',
+        },
+        {
+            name: 'Que se siente!',
+            src: 'music/Que se siente!.m4a',
+        },
+        {
+            name: 'Piel canela!',
+            src: 'music/Piel Canela!.m4a',
+        },
+        {
+            name: 'Café con leche!',
+            src: 'music/Café con leche!.m4a',
+        },
+        {
+            name: 'Honey!',
+            src: 'music/Honey!.m4a',
+        },
+        {
+            name: 'Mi lugar!',
+            src: 'music/Mi lugar!.m4a',
+        },
+        {
+            name: 'Morena mía!',
+            src: 'music/Morena mía!!.m4a',
+        },
+        {
+            name: 'Palabras de amor!',
+            src: 'music/Palabras de amor!.m4a',
+        },
+        {
+            name: 'Tú geografía!',
+            src: 'music/Tú Geografía!!!.m4a',
+        },
 
+        {
+            name: 'Tomándote!',
+            src: 'music/Tomándote!.m4a',
+        },
+        
+        {
+            name: 'Cardo o ceniza!',
+            src: 'music/CardoOCeniza!.m4a',
+        },
+        {
+            name: 'Amor de mis amores!',
+            src: 'music/Amor de mis amores!.m4a',
+        },
+        {
+            name: 'Por que te fuiste!',
+            src: 'music/Por que te fuiste!.m4a',
+        },
+    ];
+    
+    const btnPlayMusic = document.getElementById('btn-play-music');
+    const btnPrevSong = document.getElementById('btn-prev-song');
+    const btnNextSong = document.getElementById('btn-next-song');
+    const songs = document.getElementById('songs');
+    const cover = document.getElementById('cover');
+    const audio = document.getElementById('audio');
+    const progress = document.getElementById('progress');
+    const progressContainer = document.getElementById('progress-container');
+    const titleSong = document.getElementById('title-song');
+    const loadSongs = () => {
+        dataMusic.forEach((song, index) => {
+            songs.innerHTML += `<li><a data-id="${index}" class="song" href="##">${song.name}</a></li>`;
+        });
+    };
+    const loadSong = (songIndex) => {
+        const song = dataMusic[songIndex];
+        audio.src = song.src;
+        audio.play();
+        cover.classList.add('cover-girar');
+        titleSong.innerHTML = song.name;
+        cover.style.animationPlayState = 'running';
+    };
+    loadSongs();
+    const songsList = document.querySelectorAll('.song');
+    songsList.forEach((song) => {
+        song.addEventListener('click', (event) => {
+            const songIndex = event.target.dataset.id;
+            songsList.forEach((song) => {
+                song.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            btnPlayMusic.innerHTML = '<i class="fas fa-pause"></i>';
+            loadSong(songIndex);
+        });
+    });
+    btnPlayMusic.addEventListener('click', () => {
+        if (songsList.length > 0) {
+            let active = false;
+            songsList.forEach((song) => {
+                if (song.classList.contains('active')) {
+                    active = true;
+                }
+            });
+            if (!active) {
+                songsList[0].classList.add('active');
+                loadSong(0);
+                btnPlayMusic.innerHTML = '<i class="fas fa-pause"></i>';
+                return;
+            }
+        }
+        if (audio.paused) {
+            audio.play();
+            cover.style.animationPlayState = 'running';
+            btnPlayMusic.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        else {
+            audio.pause();
+            cover.style.animationPlayState = 'paused';
+            btnPlayMusic.innerHTML = '<i class="fas fa-play"></i>';
+        }       
+    });
+    audio.addEventListener('timeupdate', (event) => {
+        const { currentTime, duration } = event.target;
+        const progressPercent = (currentTime / duration) * 100;
+        progress.style.width = `${progressPercent}%`;
+    });
+    audio.addEventListener('ended', () => {
+        let activeSong = document.querySelector('.song.active');
+        let nextSong = activeSong.parentElement.nextElementSibling;
+        activeSong.classList.remove('active');
+        if (!nextSong) {
+            btnPlayMusic.innerHTML = '<i class="fas fa-play"></i>';
+            cover.style.animationPlayState = 'paused';    
+        } else {
+            nextSong.children[0].classList.add('active');
+            loadSong(nextSong.children[0].dataset.id);
+        }
+    });
+    progressContainer.addEventListener('click', (event) => {
+        const width = event.target.clientWidth;
+        const clickX = event.offsetX;
+        const duration = audio.duration;
+        if (!isNaN(duration)) {
+            audio.currentTime = (clickX / width) * duration;
+        }
+    });
+    btnPrevSong.addEventListener('click', () => {
+        let activeSong = document.querySelector('.song.active');
+        if(!activeSong) return;
+        let prevSong = activeSong.parentElement.previousElementSibling;
+        activeSong.classList.remove('active');
+        if (!prevSong) {
+            prevSong = songsList[songsList.length - 1];
+            prevSong.classList.add('active');
+            loadSong(prevSong.dataset.id);
+        } else {
+            prevSong.children[0].classList.add('active');
+            console.log(prevSong.dataset)
+            loadSong(prevSong.children[0].dataset.id);
+        }
+    });
+    btnNextSong.addEventListener('click', () => {
+        let activeSong = document.querySelector('.song.active');
+        if(!activeSong) return;
+        let nextSong = activeSong.parentElement.nextElementSibling;
+        activeSong.classList.remove('active');
+        if (!nextSong) {
+            nextSong = songsList[0];
+            nextSong.classList.add('active');
+            loadSong(nextSong.dataset.id);
+        } else {
+            nextSong.children[0].classList.add('active');
+            loadSong(nextSong.children[0].dataset.id);
+        }
+    });
 });

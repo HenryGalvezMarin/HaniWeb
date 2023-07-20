@@ -11,6 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;400;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/base.css" />
   </head>
   <body>
@@ -46,17 +47,18 @@
       <section class="section-1">
         <div>
           <div class="section-1-desktop">
-          <h3 id="titulo-1">TE AMO PANDITA</h3>
-          <hr id="hr-1" />
-          <img id="hani-1" src="img/Hani1.jpg" alt="hani1" />
-        </div>
+            <h3 id="titulo-1">TE AMO PANDITA</h3>
+            <hr id="hr-1" />
+            <img id="hani-1" src="img/Hani1.jpg" alt="hani1" />
+          </div>
           <p id="texto-1">
             Eres el amor de mi vida, la persona que me hace feliz.
             <br />
             No me imagino mi vida sin ti, lo que mas deseo en este mundo es
             estar a tu lado.
             <br />
-            Gracias por todo lo que haces por mi, por ser tú y por darme la oportunidad de tener una relación tan bonita.
+            Gracias por todo lo que haces por mi, por ser tú y por darme la
+            oportunidad de tener una relación tan bonita.
             <br />
             Te amo mucho mi morena hermosa.
           </p>
@@ -84,6 +86,30 @@
               <button id="restart-btn" class="restart-btn"></button>
             </div>
           </div>
+        </div>
+      </section>
+      <section class="section-3">
+        <h3>Reproductor de Hani 🌻</h3>
+        <div class="player">
+          <h3 id="title-song" class="title">Play a song!</h3>
+          <img id="cover" class="cover" src="img/margarita.png" alt="cover" />
+          <div id="progress-container" class="progress-container">
+            <div id="progress" class="progress"></div>
+          </div>
+          <audio id="audio" src=""></audio>
+          <div class="controls">
+            <button id="btn-prev-song" class="prev">
+              <i  class="fas fa-backward"></i>
+            </button>
+            <button id="btn-play-music" class="play">
+              <i class="fas fa-play"></i>
+            </button>
+            <button id="btn-next-song" class="next">
+              <i class="fas fa-forward"></i>
+            </button>
+          </div>
+          <ul id="songs" class="songs">
+          </ul>
         </div>
       </section>
     </main>
