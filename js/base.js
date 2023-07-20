@@ -170,6 +170,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cover.classList.add('cover-girar');
         titleSong.innerHTML = song.name;
         cover.style.animationPlayState = 'running';
+        btnPlayMusic.innerHTML = '<i class="fas fa-pause"></i>';
     };
     loadSongs();
     const songsList = document.querySelectorAll('.song');
@@ -195,7 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!active) {
                 songsList[0].classList.add('active');
                 loadSong(0);
-                btnPlayMusic.innerHTML = '<i class="fas fa-pause"></i>';
                 return;
             }
         }
